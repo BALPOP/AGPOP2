@@ -178,7 +178,7 @@ body {
 /* Specific styling for Mentor Card to accommodate logos */
 .card-mentor {
     margin-top: 35px; /* Reduced from 50px */
-    padding-top: 35px; /* Reduced from 50px to pull content closer to logos */
+    padding-top: 45px; /* Increased to 45px to add 10px spacing */
 }
 
 .card::before {
@@ -805,7 +805,7 @@ body {
 
     .card-mentor {
         margin-top: 30px; /* Reduced from 40px */
-        padding-top: 25px; /* Reduced from 40px */
+        padding-top: 35px; /* Increased to 35px to add 10px spacing */
     }
 
     /* Mentor Section Compaction */
