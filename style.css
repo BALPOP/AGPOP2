@@ -665,6 +665,8 @@ body {
                 inset 0 0 0 1px rgba(212, 175, 55, 0.15);
     position: relative;
     z-index: 1;
+    margin-bottom: 15px;
+
 }
 
 .rtp-iframe {
@@ -677,6 +679,7 @@ body {
 /* Hide iframe internal scrollbar if possible */
 .rtp-iframe-container::-webkit-scrollbar {
     display: none;
+    margin-bottom: 15px;
 }
 
 /* ===== BONUS CARD ===== */
