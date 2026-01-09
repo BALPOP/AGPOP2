@@ -414,7 +414,7 @@ body {
     display: flex;
     align-items: center;
     gap: 16px;
-    margin-bottom: 4px; /* Drastically reduced from 12px */
+    margin-bottom: 8px; /* Drastically reduced from 12px */
 }
 
 .mentor-avatar {
@@ -811,7 +811,7 @@ body {
 
     /* Mentor Section Compaction */
     .mentor-header-top {
-        margin-bottom: 4px; /* Reduced from 8px */
+        margin-bottom: 8px; /* Reduced from 8px */
     }
 
     .mentor-label {
