@@ -467,6 +467,7 @@ body {
     padding: 12px 16px;
     position: relative;
     overflow: hidden;
+    font-weight: 700;
 }
 
 .mentor-bio-text::after {
