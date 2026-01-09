@@ -127,22 +127,27 @@ body {
 .container {
     max-width: 520px;
     margin: 0 auto;
-    padding: 0px 20px;
+    padding: 10px 20px;
     position: relative;
     z-index: 1;
 }
 
-/* ===== HEADER ===== */
-.header {
-    text-align: center;
-    margin-bottom: 5px;
-}
-
+/* ===== HEADER (Now inside card) ===== */
 .brand-logos {
+    position: absolute;
+    top: -45px; /* Half of 90px logo height */
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 20px;
+    z-index: 10;
+    /* Optional: background to hide border line behind it */
+    /* background: var(--dark-bg); */ 
+    padding: 0 15px;
+    border-radius: 20px;
+    margin-bottom: 0; /* ensure no extra space */
 }
 
 .brand-logo {
@@ -167,7 +172,13 @@ body {
     padding: 32px 24px;
     margin-bottom: 24px;
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; - Removed to let logos stick out */
+}
+
+/* Specific styling for Mentor Card to accommodate logos */
+.card-mentor {
+    margin-top: 35px; /* Reduced from 50px */
+    padding-top: 35px; /* Reduced from 50px to pull content closer to logos */
 }
 
 .card::before {
@@ -403,7 +414,7 @@ body {
     display: flex;
     align-items: center;
     gap: 16px;
-    margin-bottom: 12px;
+    margin-bottom: 4px; /* Drastically reduced from 12px */
 }
 
 .mentor-avatar {
@@ -773,43 +784,107 @@ body {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 480px) {
     .container {
-        padding: 0px 16px;
+        padding: 0px 16px; /* User set */
     }
 
-    .card {
-        padding: 24px 20px;
-        border-radius: 20px;
+    .brand-logos {
+        top: -35px; /* Half of 70px logo height */
+        gap: 15px;
     }
 
     .brand-logo {
-        height: 45px;
+        height: 70px; /* Reduced from 90px for compact mobile view */
+    }
+
+    .card {
+        padding: 16px 14px; /* Reduced padding from 24px 20px */
+        border-radius: 20px;
+        margin-bottom: 16px; /* Reduced bottom margin */
+        overflow: visible; /* Ensure logos are visible */
+    }
+
+    .card-mentor {
+        margin-top: 30px; /* Reduced from 40px */
+        padding-top: 25px; /* Reduced from 40px */
+    }
+
+    /* Mentor Section Compaction */
+    .mentor-header-top {
+        margin-bottom: 4px; /* Reduced from 8px */
+    }
+
+    .mentor-label {
+        font-size: 13px; /* Slightly smaller on mobile but still readable */
+        margin-bottom: 2px;
+    }
+
+    .mentor-name {
+        font-size: 24px; /* Reduced from 30px to fit better */
+    }
+
+    .mentor-bio-text {
+        font-size: 14px;
+        padding: 10px 12px;
+        margin-bottom: 10px;
+    }
+
+    .contact-btns {
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .contact-btn {
+        padding: 14px; /* Reduced padding */
+    }
+
+    .group-btn {
+        padding: 14px;
+    }
+
+    /* Launch Section Compaction */
+    .launch-badge {
+        padding: 6px 16px;
+        margin-bottom: 8px;
+        font-size: 11px;
     }
 
     .launch-title {
-        font-size: 26px;
+        font-size: 24px;
+        margin-bottom: 2px;
+    }
+
+    .launch-subtitle {
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
+
+    .launch-date {
+        margin-bottom: 16px; /* Reduced from 24px */
     }
 
     .date-day {
         font-size: 56px;
-        margin-bottom: 3px;
+        margin-bottom: 0px;
+        line-height: 0.9;
     }
 
     .date-month {
-        font-size: 22px;
-        letter-spacing: 5px;
+        font-size: 20px;
+        letter-spacing: 4px;
     }
 
     .banner-slider {
+        margin-bottom: 16px; /* Reduced from 28px */
         border-radius: 12px;
     }
 
-    .mentor-name {
-        font-size: 20px;
-    }
-
     .btn-primary {
-        padding: 16px 28px;
+        padding: 14px 24px;
         font-size: 12px;
         letter-spacing: 2px;
+    }
+
+    .footer {
+        padding: 16px;
     }
 }
