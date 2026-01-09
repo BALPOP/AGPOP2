@@ -127,7 +127,7 @@ body {
 .container {
     max-width: 520px;
     margin: 0 auto;
-    padding: 30px 20px;
+    padding: 0px 20px;
     position: relative;
     z-index: 1;
 }
@@ -135,7 +135,7 @@ body {
 /* ===== HEADER ===== */
 .header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .brand-logos {
@@ -146,7 +146,7 @@ body {
 }
 
 .brand-logo {
-    height: 75px;
+    height: 90px;
     width: auto;
     filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.3));
 }
@@ -256,8 +256,8 @@ body {
 
 .banner-track {
     display: flex;
-    /* 16s total: 4 slides × 4s each (3s display + 1s transition) */
-    animation: bannerSlide 16s ease-in-out infinite;
+    /* 24s total: 6 slides × 4s each (3s display + 1s transition) */
+    animation: bannerSlide 24s ease-in-out infinite;
 }
 
 .banner-slide {
@@ -307,14 +307,18 @@ body {
 /* Slide animation: pause on each slide, then slide to next */
 @keyframes bannerSlide {
     0% { transform: translateX(0); }
-    20% { transform: translateX(0); }
-    25% { transform: translateX(-100%); }
-    45% { transform: translateX(-100%); }
-    50% { transform: translateX(-200%); }
-    70% { transform: translateX(-200%); }
-    75% { transform: translateX(-300%); }
-    95% { transform: translateX(-300%); }
-    100% { transform: translateX(-400%); }
+    14% { transform: translateX(0); }
+    16.66% { transform: translateX(-100%); }
+    30.66% { transform: translateX(-100%); }
+    33.33% { transform: translateX(-200%); }
+    47.33% { transform: translateX(-200%); }
+    50% { transform: translateX(-300%); }
+    64% { transform: translateX(-300%); }
+    66.66% { transform: translateX(-400%); }
+    80.66% { transform: translateX(-400%); }
+    83.33% { transform: translateX(-500%); }
+    97.33% { transform: translateX(-500%); }
+    100% { transform: translateX(-600%); }
 }
 
 /* Banner Glow Effect */
@@ -395,11 +399,11 @@ body {
 }
 
 /* ===== MENTOR CARD ===== */
-.mentor-header {
+.mentor-header-top {
     display: flex;
-    align-items: flex-start; /* Align to top instead of center */
+    align-items: center;
     gap: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .mentor-avatar {
@@ -413,39 +417,64 @@ body {
     font-size: 20px;
     font-weight: 800;
     color: white;
-    flex-shrink: 0; /* Prevent shrinking */
-    margin-top: 18px; /* Optically align with the name/text block top */
+    flex-shrink: 0;
 }
 
-.mentor-info {
+.mentor-identity {
     display: flex;
     flex-direction: column;
 }
 
 .mentor-label {
-    font-size: 11px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--primary-light);
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-bottom: 6px; /* Added gap */
+    margin-bottom: 4px;
     display: block;
 }
 
 .mentor-name {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 800;
     color: var(--text-primary);
-    line-height: 1.1; /* Tighter line height for the name */
-    margin-bottom: 2px; /* Small gap before bio */
+    line-height: 1.1;
+    margin-bottom: 0;
 }
 
 .mentor-bio-text {
-    font-size: 15px; /* Increased from 13px */
+    font-size: 15px;
     color: var(--text-secondary);
-    line-height: 1.6; /* Increased line height */
-    margin-top: 0px; /* Increased gap significantly */
+    line-height: 1.6;
+    margin-bottom: 10px;
+    width: 100%;
     max-width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.mentor-bio-text::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        transparent 40%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 60%,
+        transparent 100%
+    );
+    animation: lightSweepDiagonal 3s ease-in-out infinite;
+    pointer-events: none;
 }
 
 .mentor-desc {
