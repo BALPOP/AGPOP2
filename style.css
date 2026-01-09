@@ -577,11 +577,11 @@ body {
 }
 
 .contact-btn.whatsapp {
-    background: linear-gradient(135deg, #25D366, #128C7E);
+    background: linear-gradient(180deg, #25D366, #128C7E);
 }
 
 .contact-btn.telegram {
-    background: linear-gradient(135deg, #0088cc, #005f99);
+    background: linear-gradient(180deg, #0088cc, #005f99);
 }
 
 .contact-btn:hover {
