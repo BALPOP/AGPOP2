@@ -147,7 +147,7 @@ body {
     /* background: var(--dark-bg); */ 
     padding: 0 15px;
     border-radius: 20px;
-    margin-bottom: 0; /* ensure no extra space */
+    margin-bottom: 10px; /* ensure no extra space */
 }
 
 .brand-logo {
