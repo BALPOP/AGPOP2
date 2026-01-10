@@ -469,6 +469,8 @@ body {
     overflow: hidden;
     font-weight: 700;
     text-transform: uppercase;
+    white-space: nowrap; /* Force single line */
+    text-align: center; /* Center as fallback, JS will adjust */
 }
 
 .mentor-bio-text::after {
