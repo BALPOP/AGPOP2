@@ -20,33 +20,15 @@ function adjustMentorBioText() {
         
         if (!mainText || !recebaText) return;
         
-        // Get container width (accounting for padding and gap)
+        // Get container width (accounting for padding)
         const containerWidth = element.offsetWidth;
         const padding = parseFloat(getComputedStyle(element).paddingLeft) + 
                        parseFloat(getComputedStyle(element).paddingRight);
-        const gap = parseFloat(getComputedStyle(element).gap) || 10;
+        const availableWidth = containerWidth - padding;
         
         // Reset styles for measurement
         mainText.style.letterSpacing = '';
         mainText.style.fontSize = '';
-        recebaText.style.fontSize = '';
-        
-        // Measure "Receba agora" width (fixed, no spacing)
-        const tempReceba = document.createElement('span');
-        tempReceba.style.visibility = 'hidden';
-        tempReceba.style.position = 'absolute';
-        tempReceba.style.whiteSpace = 'nowrap';
-        tempReceba.style.fontWeight = getComputedStyle(recebaText).fontWeight;
-        tempReceba.style.fontFamily = getComputedStyle(recebaText).fontFamily;
-        tempReceba.style.textTransform = getComputedStyle(recebaText).textTransform;
-        tempReceba.style.fontSize = getComputedStyle(element).fontSize;
-        tempReceba.textContent = recebaText.textContent.trim();
-        document.body.appendChild(tempReceba);
-        const recebaWidth = tempReceba.offsetWidth;
-        document.body.removeChild(tempReceba);
-        
-        // Calculate available width for main text
-        const availableWidth = containerWidth - padding - recebaWidth - gap;
         
         // Measure main text at base font size
         const tempMain = document.createElement('span');
@@ -62,14 +44,22 @@ function adjustMentorBioText() {
         const baseTextWidth = tempMain.offsetWidth;
         document.body.removeChild(tempMain);
         
-        // Calculate letter-spacing to fill the width
+        // Calculate letter-spacing to fill the width on first line
         const textLength = mainText.textContent.trim().length;
         if (textLength > 1 && baseTextWidth < availableWidth) {
             const spacing = (availableWidth - baseTextWidth) / (textLength - 1);
             mainText.style.letterSpacing = spacing + 'px';
+        } else if (baseTextWidth > availableWidth) {
+            // If text is too wide, reduce font size slightly to fit
+            const scaleFactor = availableWidth / baseTextWidth;
+            const currentFontSize = parseFloat(getComputedStyle(element).fontSize);
+            mainText.style.fontSize = (currentFontSize * scaleFactor * 0.95) + 'px';
+            mainText.style.letterSpacing = '0px';
         } else {
             mainText.style.letterSpacing = '0px';
         }
+        
+        // "Receba agora" stays on second line, left-aligned, no adjustments needed
     });
 }
 

@@ -469,23 +469,21 @@ body {
     overflow: hidden;
     font-weight: 700;
     text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    white-space: nowrap;
-    gap: 10px;
 }
 
 .bio-main-text {
-    flex: 1;
+    display: block;
     text-align: left;
     white-space: nowrap;
+    width: 100%;
 }
 
 .bio-receba {
-    flex-shrink: 0;
+    display: block;
     text-align: left;
     white-space: nowrap;
+    width: 100%;
+    margin-top: 8px; /* Space between lines */
 }
 
 .mentor-bio-text::after {
