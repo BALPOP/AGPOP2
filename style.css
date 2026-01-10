@@ -864,11 +864,16 @@ body {
         padding: 10px 12px;
         padding-right: 12px;
         margin-bottom: 10px;
+        overflow: hidden !important; /* Prevent text from going outside container */
+        word-wrap: break-word; /* Allow text to wrap if needed */
     }
 
     .bio-main-text {
         font-size: 13px !important; /* Match parent on mobile - MUST MATCH */
         text-align: center !important; /* CENTERED on mobile */
+        max-width: 100% !important; /* Prevent overflow */
+        overflow: hidden !important; /* Prevent overflow */
+        word-wrap: break-word; /* Allow wrapping if needed */
     }
 
     .bio-receba {

@@ -26,6 +26,9 @@ function adjustMentorBioText() {
                        parseFloat(getComputedStyle(element).paddingRight);
         const availableWidth = containerWidth - padding;
         
+        // Detect mobile (screen width <= 480px)
+        const isMobile = window.innerWidth <= 480;
+        
         // Get the base font size from CSS (respecting media queries)
         const baseFontSize = parseFloat(getComputedStyle(element).fontSize);
         
@@ -51,24 +54,30 @@ function adjustMentorBioText() {
         const textLength = mainText.textContent.trim().length;
         let finalFontSize = baseFontSize;
         
-        if (textLength > 1 && baseTextWidth < availableWidth) {
-            const spacing = (availableWidth - baseTextWidth) / (textLength - 1);
-            mainText.style.letterSpacing = spacing + 'px';
-        } else if (baseTextWidth > availableWidth) {
-            // If text is too wide, reduce font size slightly to fit
+        if (baseTextWidth > availableWidth) {
+            // If text is too wide, reduce font size to fit (CRITICAL for mobile)
             const scaleFactor = availableWidth / baseTextWidth;
-            finalFontSize = baseFontSize * scaleFactor * 0.95;
+            finalFontSize = baseFontSize * scaleFactor * 0.98; // 98% to leave small margin
             mainText.style.fontSize = finalFontSize + 'px';
             mainText.style.letterSpacing = '0px';
+        } else if (!isMobile && textLength > 1 && baseTextWidth < availableWidth) {
+            // Only use letter-spacing on desktop, not mobile
+            const spacing = (availableWidth - baseTextWidth) / (textLength - 1);
+            // Cap spacing to prevent overflow
+            const maxSpacing = availableWidth / textLength;
+            mainText.style.letterSpacing = Math.min(spacing, maxSpacing * 0.5) + 'px';
         } else {
+            // Mobile: no letter-spacing, just center
             mainText.style.letterSpacing = '0px';
         }
         
         // Ensure both texts have EXACTLY the same font size and are centered
         mainText.style.fontSize = finalFontSize + 'px';
         mainText.style.textAlign = 'center'; // Ensure main text is centered
+        mainText.style.maxWidth = '100%'; // Prevent overflow
         recebaText.style.fontSize = finalFontSize + 'px'; // EXACTLY match main text font size
         recebaText.style.textAlign = 'center'; // Ensure centered
+        recebaText.style.maxWidth = '100%'; // Prevent overflow
     });
 }
 
