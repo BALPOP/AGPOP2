@@ -156,6 +156,10 @@ body {
     filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.3));
 }
 
+.brand-logo[alt="POPVAI"] {
+    height: 75px; /* Smaller than POPLUZ logo */
+}
+
 .brand-divider {
     font-size: 24px;
     font-weight: 300;
@@ -267,8 +271,8 @@ body {
 
 .banner-track {
     display: flex;
-    /* 24s total: 6 slides × 4s each (3s display + 1s transition) */
-    animation: bannerSlide 24s ease-in-out infinite;
+    /* 28s total: 7 slides × 4s each (3s display + 1s transition) */
+    animation: bannerSlide 28s ease-in-out infinite;
 }
 
 .banner-slide {
@@ -316,20 +320,23 @@ body {
 }
 
 /* Slide animation: pause on each slide, then slide to next */
+/* 7 slides: each slide shows for ~3.43s, transitions for ~0.57s */
 @keyframes bannerSlide {
     0% { transform: translateX(0); }
-    14% { transform: translateX(0); }
-    16.66% { transform: translateX(-100%); }
-    30.66% { transform: translateX(-100%); }
-    33.33% { transform: translateX(-200%); }
-    47.33% { transform: translateX(-200%); }
-    50% { transform: translateX(-300%); }
-    64% { transform: translateX(-300%); }
-    66.66% { transform: translateX(-400%); }
-    80.66% { transform: translateX(-400%); }
-    83.33% { transform: translateX(-500%); }
-    97.33% { transform: translateX(-500%); }
-    100% { transform: translateX(-600%); }
+    12.14% { transform: translateX(0); }
+    14.28% { transform: translateX(-100%); }
+    26.42% { transform: translateX(-100%); }
+    28.57% { transform: translateX(-200%); }
+    40.71% { transform: translateX(-200%); }
+    42.85% { transform: translateX(-300%); }
+    55% { transform: translateX(-300%); }
+    57.14% { transform: translateX(-400%); }
+    69.28% { transform: translateX(-400%); }
+    71.42% { transform: translateX(-500%); }
+    83.57% { transform: translateX(-500%); }
+    85.71% { transform: translateX(-600%); }
+    97.85% { transform: translateX(-600%); }
+    100% { transform: translateX(-700%); }
 }
 
 /* Banner Glow Effect */
@@ -480,7 +487,7 @@ body {
 
 .bio-receba {
     display: block;
-    text-align: left;
+    text-align: center; /* Centered */
     white-space: nowrap;
     width: 100%;
     margin-top: 8px; /* Space between lines */
@@ -816,6 +823,10 @@ body {
 
     .brand-logo {
         height: 70px; /* Reduced from 90px for compact mobile view */
+    }
+
+    .brand-logo[alt="POPVAI"] {
+        height: 60px; /* Smaller than POPLUZ logo on mobile */
     }
 
     .card {
