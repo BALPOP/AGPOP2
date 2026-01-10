@@ -26,6 +26,9 @@ function adjustMentorBioText() {
                        parseFloat(getComputedStyle(element).paddingRight);
         const availableWidth = containerWidth - padding;
         
+        // Get the base font size from CSS (respecting media queries)
+        const baseFontSize = parseFloat(getComputedStyle(element).fontSize);
+        
         // Reset styles for measurement
         mainText.style.letterSpacing = '';
         mainText.style.fontSize = '';
@@ -38,7 +41,7 @@ function adjustMentorBioText() {
         tempMain.style.fontWeight = getComputedStyle(mainText).fontWeight;
         tempMain.style.fontFamily = getComputedStyle(mainText).fontFamily;
         tempMain.style.textTransform = getComputedStyle(mainText).textTransform;
-        tempMain.style.fontSize = getComputedStyle(element).fontSize;
+        tempMain.style.fontSize = baseFontSize + 'px';
         tempMain.textContent = mainText.textContent.trim();
         document.body.appendChild(tempMain);
         const baseTextWidth = tempMain.offsetWidth;
@@ -46,21 +49,25 @@ function adjustMentorBioText() {
         
         // Calculate letter-spacing to fill the width on first line
         const textLength = mainText.textContent.trim().length;
+        let finalFontSize = baseFontSize;
+        
         if (textLength > 1 && baseTextWidth < availableWidth) {
             const spacing = (availableWidth - baseTextWidth) / (textLength - 1);
             mainText.style.letterSpacing = spacing + 'px';
         } else if (baseTextWidth > availableWidth) {
             // If text is too wide, reduce font size slightly to fit
             const scaleFactor = availableWidth / baseTextWidth;
-            const currentFontSize = parseFloat(getComputedStyle(element).fontSize);
-            mainText.style.fontSize = (currentFontSize * scaleFactor * 0.95) + 'px';
+            finalFontSize = baseFontSize * scaleFactor * 0.95;
+            mainText.style.fontSize = finalFontSize + 'px';
             mainText.style.letterSpacing = '0px';
         } else {
             mainText.style.letterSpacing = '0px';
         }
         
-        // Ensure "Fale comigo para receber" stays centered and same font size
-        recebaText.style.fontSize = getComputedStyle(element).fontSize; // Match parent font size
+        // Ensure both texts have EXACTLY the same font size and are centered
+        mainText.style.fontSize = finalFontSize + 'px';
+        mainText.style.textAlign = 'center'; // Ensure main text is centered
+        recebaText.style.fontSize = finalFontSize + 'px'; // EXACTLY match main text font size
         recebaText.style.textAlign = 'center'; // Ensure centered
     });
 }

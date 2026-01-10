@@ -480,7 +480,7 @@ body {
 
 .bio-main-text {
     display: block;
-    text-align: left;
+    text-align: center !important; /* CENTERED on all versions */
     white-space: nowrap;
     width: 100%;
     font-size: 18px; /* Explicitly match parent font size */
@@ -867,11 +867,12 @@ body {
     }
 
     .bio-main-text {
-        font-size: 13px; /* Match parent on mobile */
+        font-size: 13px !important; /* Match parent on mobile - MUST MATCH */
+        text-align: center !important; /* CENTERED on mobile */
     }
 
     .bio-receba {
-        font-size: 13px; /* Match parent on mobile - SAME AS MAIN TEXT */
+        font-size: 13px !important; /* Match parent on mobile - SAME AS MAIN TEXT - MUST MATCH */
         text-align: center !important; /* Ensure centered on mobile */
     }
 
