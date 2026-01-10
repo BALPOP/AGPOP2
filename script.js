@@ -10,67 +10,66 @@
  * and fill the container width (left-right justified).
  */
 
-// Function to adjust mentor bio text to fit container
+// Function to adjust mentor bio text to fill container width
 function adjustMentorBioText() {
     const bioTexts = document.querySelectorAll('.mentor-bio-text');
     
     bioTexts.forEach(element => {
-        // Get container width (accounting for padding)
+        const mainText = element.querySelector('.bio-main-text');
+        const recebaText = element.querySelector('.bio-receba');
+        
+        if (!mainText || !recebaText) return;
+        
+        // Get container width (accounting for padding and gap)
         const containerWidth = element.offsetWidth;
         const padding = parseFloat(getComputedStyle(element).paddingLeft) + 
                        parseFloat(getComputedStyle(element).paddingRight);
-        const availableWidth = containerWidth - padding;
+        const gap = parseFloat(getComputedStyle(element).gap) || 10;
         
-        // Reset to base size for measurement
-        element.style.fontSize = '';
-        element.style.letterSpacing = '';
+        // Reset styles for measurement
+        mainText.style.letterSpacing = '';
+        mainText.style.fontSize = '';
+        recebaText.style.fontSize = '';
         
-        // Create a temporary span to measure text width
-        const tempSpan = document.createElement('span');
-        tempSpan.style.visibility = 'hidden';
-        tempSpan.style.position = 'absolute';
-        tempSpan.style.whiteSpace = 'nowrap';
-        tempSpan.style.fontWeight = getComputedStyle(element).fontWeight;
-        tempSpan.style.fontFamily = getComputedStyle(element).fontFamily;
-        tempSpan.style.textTransform = getComputedStyle(element).textTransform;
-        tempSpan.textContent = element.textContent.trim();
+        // Measure "Receba agora" width (fixed, no spacing)
+        const tempReceba = document.createElement('span');
+        tempReceba.style.visibility = 'hidden';
+        tempReceba.style.position = 'absolute';
+        tempReceba.style.whiteSpace = 'nowrap';
+        tempReceba.style.fontWeight = getComputedStyle(recebaText).fontWeight;
+        tempReceba.style.fontFamily = getComputedStyle(recebaText).fontFamily;
+        tempReceba.style.textTransform = getComputedStyle(recebaText).textTransform;
+        tempReceba.style.fontSize = getComputedStyle(element).fontSize;
+        tempReceba.textContent = recebaText.textContent.trim();
+        document.body.appendChild(tempReceba);
+        const recebaWidth = tempReceba.offsetWidth;
+        document.body.removeChild(tempReceba);
         
-        document.body.appendChild(tempSpan);
+        // Calculate available width for main text
+        const availableWidth = containerWidth - padding - recebaWidth - gap;
         
-        // Binary search for optimal font size
-        let minSize = 8;
-        let maxSize = 24;
-        let optimalSize = 13;
+        // Measure main text at base font size
+        const tempMain = document.createElement('span');
+        tempMain.style.visibility = 'hidden';
+        tempMain.style.position = 'absolute';
+        tempMain.style.whiteSpace = 'nowrap';
+        tempMain.style.fontWeight = getComputedStyle(mainText).fontWeight;
+        tempMain.style.fontFamily = getComputedStyle(mainText).fontFamily;
+        tempMain.style.textTransform = getComputedStyle(mainText).textTransform;
+        tempMain.style.fontSize = getComputedStyle(element).fontSize;
+        tempMain.textContent = mainText.textContent.trim();
+        document.body.appendChild(tempMain);
+        const baseTextWidth = tempMain.offsetWidth;
+        document.body.removeChild(tempMain);
         
-        for (let i = 0; i < 20; i++) {
-            const testSize = (minSize + maxSize) / 2;
-            tempSpan.style.fontSize = testSize + 'px';
-            const textWidth = tempSpan.offsetWidth;
-            
-            if (textWidth <= availableWidth) {
-                optimalSize = testSize;
-                minSize = testSize;
-            } else {
-                maxSize = testSize;
-            }
-        }
-        
-        // Apply optimal font size
-        element.style.fontSize = optimalSize + 'px';
-        
-        // Measure text width at optimal size
-        tempSpan.style.fontSize = optimalSize + 'px';
-        const finalTextWidth = tempSpan.offsetWidth;
-        
-        // Calculate letter-spacing to justify (fill width)
-        if (finalTextWidth < availableWidth && element.textContent.trim().length > 1) {
-            const spacing = (availableWidth - finalTextWidth) / (element.textContent.trim().length - 1);
-            element.style.letterSpacing = spacing + 'px';
+        // Calculate letter-spacing to fill the width
+        const textLength = mainText.textContent.trim().length;
+        if (textLength > 1 && baseTextWidth < availableWidth) {
+            const spacing = (availableWidth - baseTextWidth) / (textLength - 1);
+            mainText.style.letterSpacing = spacing + 'px';
         } else {
-            element.style.letterSpacing = '0px';
+            mainText.style.letterSpacing = '0px';
         }
-        
-        document.body.removeChild(tempSpan);
     });
 }
 

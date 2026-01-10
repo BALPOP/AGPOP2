@@ -455,7 +455,7 @@ body {
 }
 
 .mentor-bio-text {
-    font-size: 13px;
+    font-size: 18px; /* Large base font size */
     color: var(--text-secondary);
     line-height: 1.2;
     margin-bottom: 10px;
@@ -469,8 +469,23 @@ body {
     overflow: hidden;
     font-weight: 700;
     text-transform: uppercase;
-    white-space: nowrap; /* Force single line */
-    text-align: center; /* Center as fallback, JS will adjust */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    gap: 10px;
+}
+
+.bio-main-text {
+    flex: 1;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.bio-receba {
+    flex-shrink: 0;
+    text-align: left;
+    white-space: nowrap;
 }
 
 .mentor-bio-text::after {
