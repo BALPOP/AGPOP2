@@ -483,14 +483,18 @@ body {
     text-align: left;
     white-space: nowrap;
     width: 100%;
+    font-size: 18px; /* Explicitly match parent font size */
 }
 
 .bio-receba {
     display: block;
-    text-align: center; /* Centered */
+    text-align: center !important; /* Force center alignment */
     white-space: nowrap;
     width: 100%;
     margin-top: 8px; /* Space between lines */
+    font-size: 18px; /* Explicitly match parent font size - SAME AS MAIN TEXT */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .mentor-bio-text::after {
@@ -860,6 +864,15 @@ body {
         padding: 10px 12px;
         padding-right: 12px;
         margin-bottom: 10px;
+    }
+
+    .bio-main-text {
+        font-size: 13px; /* Match parent on mobile */
+    }
+
+    .bio-receba {
+        font-size: 13px; /* Match parent on mobile - SAME AS MAIN TEXT */
+        text-align: center !important; /* Ensure centered on mobile */
     }
 
     .contact-btns {

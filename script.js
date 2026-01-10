@@ -59,7 +59,9 @@ function adjustMentorBioText() {
             mainText.style.letterSpacing = '0px';
         }
         
-        // "Receba agora" stays on second line, left-aligned, no adjustments needed
+        // Ensure "Fale comigo para receber" stays centered and same font size
+        recebaText.style.fontSize = getComputedStyle(element).fontSize; // Match parent font size
+        recebaText.style.textAlign = 'center'; // Ensure centered
     });
 }
 
