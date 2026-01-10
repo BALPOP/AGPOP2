@@ -481,18 +481,19 @@ body {
 .bio-main-text {
     display: block;
     text-align: center !important; /* CENTERED on all versions */
-    white-space: nowrap;
+    white-space: nowrap !important;
     width: 100%;
-    font-size: 18px; /* Explicitly match parent font size */
+    font-size: 18px; /* Base font size - JS will override dynamically */
+    overflow: visible; /* Allow text to be visible during scaling */
 }
 
 .bio-receba {
     display: block;
     text-align: center !important; /* Force center alignment */
-    white-space: nowrap;
+    white-space: nowrap !important;
     width: 100%;
     margin-top: 8px; /* Space between lines */
-    font-size: 18px; /* Explicitly match parent font size - SAME AS MAIN TEXT */
+    font-size: 18px; /* Base font size - JS will override to match main text dynamically */
     margin-left: auto;
     margin-right: auto;
 }
@@ -864,21 +865,21 @@ body {
         padding: 10px 12px;
         padding-right: 12px;
         margin-bottom: 10px;
-        overflow: hidden !important; /* Prevent text from going outside container */
-        word-wrap: break-word; /* Allow text to wrap if needed */
+        overflow: hidden; /* Clip overflow but JS ensures text fits */
     }
 
     .bio-main-text {
-        font-size: 13px !important; /* Match parent on mobile - MUST MATCH */
+        font-size: 13px; /* Base font size - JS will override dynamically */
         text-align: center !important; /* CENTERED on mobile */
-        max-width: 100% !important; /* Prevent overflow */
-        overflow: hidden !important; /* Prevent overflow */
-        word-wrap: break-word; /* Allow wrapping if needed */
+        white-space: nowrap !important; /* KEEP SINGLE LINE */
+        overflow: visible !important; /* Allow text to be visible - JS will scale it */
+        max-width: 100%;
     }
 
     .bio-receba {
-        font-size: 13px !important; /* Match parent on mobile - SAME AS MAIN TEXT - MUST MATCH */
+        font-size: 13px; /* Base font size - JS will override to match main text dynamically */
         text-align: center !important; /* Ensure centered on mobile */
+        white-space: nowrap !important;
     }
 
     .contact-btns {

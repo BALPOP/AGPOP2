@@ -24,7 +24,7 @@ function adjustMentorBioText() {
         const containerWidth = element.offsetWidth;
         const padding = parseFloat(getComputedStyle(element).paddingLeft) + 
                        parseFloat(getComputedStyle(element).paddingRight);
-        const availableWidth = containerWidth - padding;
+        const availableWidth = containerWidth - padding - 4; // Extra 4px safety margin
         
         // Detect mobile (screen width <= 480px)
         const isMobile = window.innerWidth <= 480;
@@ -36,7 +36,7 @@ function adjustMentorBioText() {
         mainText.style.letterSpacing = '';
         mainText.style.fontSize = '';
         
-        // Measure main text at base font size
+        // Create measurement element
         const tempMain = document.createElement('span');
         tempMain.style.visibility = 'hidden';
         tempMain.style.position = 'absolute';
@@ -44,40 +44,69 @@ function adjustMentorBioText() {
         tempMain.style.fontWeight = getComputedStyle(mainText).fontWeight;
         tempMain.style.fontFamily = getComputedStyle(mainText).fontFamily;
         tempMain.style.textTransform = getComputedStyle(mainText).textTransform;
-        tempMain.style.fontSize = baseFontSize + 'px';
         tempMain.textContent = mainText.textContent.trim();
         document.body.appendChild(tempMain);
-        const baseTextWidth = tempMain.offsetWidth;
-        document.body.removeChild(tempMain);
         
-        // Calculate letter-spacing to fill the width on first line
-        const textLength = mainText.textContent.trim().length;
+        // Binary search for optimal font size that fits
+        let minSize = 8;
+        let maxSize = baseFontSize;
         let finalFontSize = baseFontSize;
+        let iterations = 0;
+        const maxIterations = 20;
         
-        if (baseTextWidth > availableWidth) {
-            // If text is too wide, reduce font size to fit (CRITICAL for mobile)
-            const scaleFactor = availableWidth / baseTextWidth;
-            finalFontSize = baseFontSize * scaleFactor * 0.98; // 98% to leave small margin
-            mainText.style.fontSize = finalFontSize + 'px';
-            mainText.style.letterSpacing = '0px';
-        } else if (!isMobile && textLength > 1 && baseTextWidth < availableWidth) {
-            // Only use letter-spacing on desktop, not mobile
-            const spacing = (availableWidth - baseTextWidth) / (textLength - 1);
-            // Cap spacing to prevent overflow
-            const maxSpacing = availableWidth / textLength;
-            mainText.style.letterSpacing = Math.min(spacing, maxSpacing * 0.5) + 'px';
-        } else {
-            // Mobile: no letter-spacing, just center
-            mainText.style.letterSpacing = '0px';
+        while (iterations < maxIterations && Math.abs(maxSize - minSize) > 0.5) {
+            finalFontSize = (minSize + maxSize) / 2;
+            tempMain.style.fontSize = finalFontSize + 'px';
+            const textWidth = tempMain.offsetWidth;
+            
+            if (textWidth <= availableWidth) {
+                minSize = finalFontSize; // This size fits, try larger
+            } else {
+                maxSize = finalFontSize; // Too big, try smaller
+            }
+            iterations++;
         }
         
-        // Ensure both texts have EXACTLY the same font size and are centered
-        mainText.style.fontSize = finalFontSize + 'px';
-        mainText.style.textAlign = 'center'; // Ensure main text is centered
-        mainText.style.maxWidth = '100%'; // Prevent overflow
-        recebaText.style.fontSize = finalFontSize + 'px'; // EXACTLY match main text font size
-        recebaText.style.textAlign = 'center'; // Ensure centered
-        recebaText.style.maxWidth = '100%'; // Prevent overflow
+        // Final check - ensure it definitely fits
+        tempMain.style.fontSize = finalFontSize + 'px';
+        const finalWidth = tempMain.offsetWidth;
+        if (finalWidth > availableWidth) {
+            finalFontSize = finalFontSize * (availableWidth / finalWidth) * 0.98;
+        }
+        
+        document.body.removeChild(tempMain);
+        
+        // Calculate letter-spacing for desktop if text fits
+        const textLength = mainText.textContent.trim().length;
+        let letterSpacing = 0;
+        
+        if (!isMobile && textLength > 1) {
+            tempMain.style.fontSize = finalFontSize + 'px';
+            document.body.appendChild(tempMain);
+            const textWidthAtSize = tempMain.offsetWidth;
+            document.body.removeChild(tempMain);
+            
+            if (textWidthAtSize < availableWidth) {
+                letterSpacing = (availableWidth - textWidthAtSize) / (textLength - 1);
+                const maxSpacing = availableWidth / textLength;
+                letterSpacing = Math.min(letterSpacing, maxSpacing * 0.5);
+            }
+        }
+        
+        // CRITICAL: Ensure white-space: nowrap is ALWAYS set
+        mainText.style.whiteSpace = 'nowrap';
+        recebaText.style.whiteSpace = 'nowrap';
+        
+        // Apply final styles - BOTH TEXTS GET EXACT SAME FONT SIZE
+        const fontSizeString = finalFontSize + 'px';
+        mainText.style.setProperty('font-size', fontSizeString, 'important');
+        mainText.style.letterSpacing = letterSpacing + 'px';
+        mainText.style.textAlign = 'center';
+        
+        // RECEBA TEXT MUST MATCH MAIN TEXT FONT SIZE EXACTLY
+        recebaText.style.setProperty('font-size', fontSizeString, 'important');
+        recebaText.style.textAlign = 'center';
+        recebaText.style.letterSpacing = '0px'; // No letter spacing for receba
     });
 }
 
