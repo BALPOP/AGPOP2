@@ -455,7 +455,7 @@ body {
 }
 
 .mentor-bio-text {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-secondary);
     line-height: 1.2;
     margin-bottom: 10px;
@@ -830,7 +830,7 @@ body {
     }
 
     .mentor-bio-text {
-        font-size: 14px;
+        font-size: 13px;
         padding: 10px 12px;
         padding-right: 12px;
         margin-bottom: 10px;
